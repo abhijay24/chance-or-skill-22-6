@@ -1,5 +1,5 @@
 class Bucket{
- constructor(x, y, width, height, color){
+ constructor(x, y, width, height, color, angle){
   var options = {
     isStatic: true
   }
@@ -11,14 +11,21 @@ class Bucket{
   this.width = width;
   this.height = height;
   this.color = color;
+  this.angle = angle;
   World.add(world, this.body)
+
   }
  
  display(){
+    var angle = this.body.angle;
+    var pos = this.body.position;
+    push();
+    translate(pos.x, pos.y);
+    rotate(angle);
     fill(this.color) 
     rectMode (CENTER)
-    rect(this.body.position.x, this.body.position.y, this.width, this.height)
-    
+    rect(0, 0, this.width, this.height)
+    pop();
 
 
     }
