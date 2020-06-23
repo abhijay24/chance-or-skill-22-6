@@ -23,22 +23,22 @@ function setup() {
  engine = Engine.create()
  world = engine.world
  
- bowl = new Bowl(650, 250, 300, 300)
+ bowl = new Bowl(647, 280, 300, 300)
 
  
- box1up = new Bucket(50, 500, 10, 100, "blue", PI/2); 
- box2up = new Bucket(300, 500, 10, 100, "blue", PI/2);
+ box1up = new Bucket(50, 500, 10, 100, "blue", -PI/3); 
+ box2up = new Bucket(300, 500, 10, 100, "blue", -PI/3);
  box3down = new Bucket(175, 550, 255, 10 , "blue", PI);
 
- box4up = new Bucket(450, 500, 10, 100, "yellow", PI/2);
- box5up = new Bucket(750, 500, 10, 100, "yellow", PI/2);
+ box4up = new Bucket(450, 500, 10, 100, "yellow", PI/3);
+ box5up = new Bucket(750, 500, 10, 100, "yellow", PI/3);
  box6down = new Bucket(600, 550, 310, 10, "yellow", PI);
 
- box7up = new Bucket(850, 500, 10, 100, "orange", PI/2);
- box8up = new Bucket(1250, 500, 10, 100, "orange", PI/2);
+ box7up = new Bucket(850, 500, 10, 100, "orange", PI/3);
+ box8up = new Bucket(1250, 500, 10, 100, "orange", PI/3);
  box9down = new Bucket(1050, 550, 410, 10, "green", PI);
 
- fakebuck1 = new Bucket(175, 430, 255, 10, -PI/4)
+ fakebuck1 = new Fakeobject(175, 430, 255, 10, "yellow", PI/4)
 
 }
 
@@ -55,14 +55,23 @@ function draw() {
  text("SCORE " + score, 1050, 100)
 
  if(frameCount %10 === 0){
-  ball = new Ball(random(400, 700), -50, 10, "red")
+  ball = new Ball(random(500, 800), -50, 10, "red")
   balls.push(ball)
   }
   for(var i = 0;i<balls.length;i++){
    balls[i].display();
    var collision = Matter.SAT.collides(bowl.body , balls[i].body)
    if(collision.collided){
-    Matter.Body.setVelocity(balls[i].body, {x: 20, y: 20})
+    Matter.Body.setVelocity(balls[i].body, {x: 0, y: 5})
+   }
+   if(keyCode === UP_ARROW){
+    ball.x.velocity = 20;
+    ball.y.velocity = 20;
+   }
+   if(keyCode === DOWN_ARROW){
+    ball.x.velocity = -80;
+    ball.y.velocity = 10;
+
    }
  }
  
@@ -87,6 +96,15 @@ function draw() {
   Matter.Body.setAngularVelocity(bowl.body, 1.0)
   angle = angle - 10
   }
+
+  if( bowl.angle === - 20){
+    Matter.Body.setVelocity(balls[i].body, {x: -15, y: 10} )
+  }
+  if(keyCode === 32){
+    Matter.Body.setAngle(bowl.body, angle)
+    Matter.Body.setAngularVelocity(bowl.body, 1.0)
+    angle = angle - 20
+    }
  
  bowl.display();
 
